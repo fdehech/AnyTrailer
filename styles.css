@@ -1,0 +1,152 @@
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}
+
+.dark{
+    background-color: #101010;
+}
+.light{
+    background-color: whitesmoke;
+}
+
+#main {
+    background-color: #1e1e1e;
+    width: 60vw;
+    margin-left: 20vw;
+    border-radius: 15px;
+    padding-top: 2vw;
+    padding-bottom: 6vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: max-content;
+    gap: 2vw; 
+    transition-duration: 1s;
+}
+.center{
+    margin-top: 20vw;
+    transition-duration: 1s;
+}
+.top{
+    margin-top: 5vw;
+    transition-duration: 1s;
+}
+
+
+
+.searchbox {
+    position: absolute;
+    width: 15vw;
+    height: 25px;
+    background-color: white;
+    border-radius: 15px;
+    border: none;
+    color: #353536;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    transition-duration: 2s;
+}
+
+.searchbox:hover,
+.searchbox:focus {
+    outline: none;
+    background-color: #0b0000;
+    color: white;
+}
+
+.searchbox::placeholder{
+    opacity: 0.4;
+    transition-duration: 1s;
+    color: #353536;
+}
+.searchbox:hover::placeholder
+,.searchbox:focus::placeholder {
+    color: white;
+    scale: 1.1;
+    opacity: 0.1;
+    transition-duration: 1s;
+}
+
+
+.poster {
+    position: relative;
+    display: block;
+    border-radius: 20px;
+    height: 25vw;
+    width: 12.5vw;
+    transition-duration: 1s;
+}
+
+.poster:hover{
+    opacity: 0.3;
+    transition-duration: 800ms;
+    scale: 1.2;
+    margin: 30px 30px 30px 30px;
+
+}
+
+
+
+.poster:active{
+    scale: 0.8;
+}
+#identificator{
+    visibility: hidden;
+}
+.title{
+    width: 100%;
+    color: whitesmoke;
+    text-align: center;
+    font-weight: 1000;
+    font-size: 60px;
+}
+#containerlist{
+    position: relative;
+    top: 7.5vw;
+}
+.toggleon{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 20px;
+    background-color: black;
+    top: 0.2vw;
+    left: 0.2vw;
+    transition-duration: 1s;
+    border: none;
+}
+.toggleoff{
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 20px;
+    background-color: white;
+    top: 0.2vw;
+    left: 2.2vw;
+    transition-duration: 1s;
+    border: none;
+
+}
+.stateon{
+    position: absolute;
+    border-radius: 15px;
+    background-color: white;
+    width: 4vw;
+    height: 2vw;
+    top: 2vw;
+    left: 2vw;
+    transition-duration: 1s;
+}
+.stateoff{
+    position: absolute;
+    border-radius: 15px;
+    background-color: black;
+    width: 4vw;
+    height: 2vw;
+    top: 2vw;
+    left: 2vw;
+    transition-duration: 1s;
+}
