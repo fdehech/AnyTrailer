@@ -12,11 +12,14 @@ body {
 
 #main {
     background-color: #1e1e1e;
-    width: 60vw;
+    min-width: 60vw;
+    max-width: 65vw;
     margin-left: 20vw;
     border-radius: 15px;
     padding-top: 2vw;
-    padding-bottom: 6vw;
+    padding-bottom: 10vw;
+    padding-right: 0.5vw;
+    padding-left: 0.5vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -37,16 +40,16 @@ body {
 
 .searchbox {
     position: absolute;
-    width: 15vw;
-    height: 25px;
+    width: 15%;
+    height: 5%;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 1vw;
     border: none;
     color: #353536;
     text-align: center;
     font-family: "Poppins", sans-serif;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 1em;
     transition-duration: 2s;
 }
 
@@ -74,7 +77,7 @@ body {
 .poster {
     position: relative;
     display: block;
-    border-radius: 20px;
+    border-radius: 1vw;
     height: 25vw;
     width: 12.5vw;
     transition-duration: 1s;
@@ -83,12 +86,10 @@ body {
 .poster:hover{
     opacity: 0.3;
     transition-duration: 800ms;
-    scale: 1.2;
-    margin: 30px 30px 30px 30px;
+    scale: 1.25;
+    margin: 2vw 2vw 2vw 2vw;
 
 }
-
-
 
 .poster:active{
     scale: 0.8;
@@ -105,12 +106,12 @@ body {
 }
 #containerlist{
     position: relative;
-    top: 7.5vw;
+    top: 9vw;
 }
 .toggleon{
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 1.5vw;
+    height: 1.5vw;
     border-radius: 20px;
     background-color: black;
     top: 0.2vw;
@@ -120,8 +121,8 @@ body {
 }
 .toggleoff{
     position: absolute;
-    width: 11px;
-    height: 11px;
+    width: 1.5vw;
+    height: 1.5vw;
     border-radius: 20px;
     background-color: white;
     top: 0.2vw;
@@ -132,7 +133,7 @@ body {
 }
 .stateon{
     position: absolute;
-    border-radius: 15px;
+    border-radius: 1vw;
     background-color: white;
     width: 4vw;
     height: 2vw;

@@ -1,6 +1,18 @@
 const body=document.body;
 const main=document.getElementById('main');
 
+let toggle = ()=>{
+    if (body.classList.contains("light")){
+        body.classList.replace("light","dark");
+        document.getElementById("toggle").classList.replace('toggleoff','toggleon');
+        document.getElementById("state").classList.replace('stateoff','stateon');
+    }else{
+        body.classList.replace("dark","light");
+        document.getElementById("toggle").classList.replace('toggleon','toggleoff');
+        document.getElementById("state").classList.replace('stateon','stateoff');
+    }
+}
+
 let clear = () => {
     document.getElementById("searchbox").value='';
 }
@@ -67,6 +79,13 @@ let trailer=(element) => {
     
     let page=window.open("");
     newpage(page);
+    if (main.classList.contains("dark")){
+        page.document.body.classList.add("dark");
+
+    }else{
+        page.document.body.classList.add("light");
+    }
+
 
     let InternalID = element.id;
     fetch("https://api.themoviedb.org/3/movie/"+InternalID+"/external_ids",options)
@@ -83,6 +102,16 @@ let trailer=(element) => {
                     let Onglet = Object.assign(document.createElement("title"),{ textContent :Title} );
                     
                     Tab.setAttribute("id","main");
+                    let switcher=document.createElement("span");
+                    switcher.setAttribute("id","state");
+                    switcher.setAttribute("onclick","toggle()");
+                    switcher.classList.add("stateoff");
+                    let btn = document.createElement("span");
+                    btn.setAttribute("id","toggle");
+                    btn.classList.add("toggleoff");
+                    switcher.append(btn);
+                    Tab.append(switcher);
+
                     let Header = Object.assign(document.createElement("h1"), { textContent: Title+' ('+Year+')', className: "title" });
 
                     page.document.getElementsByTagName('HEAD')[0].appendChild(Onglet);
@@ -101,9 +130,21 @@ let trailer=(element) => {
                             const videoId = R4.items[0].id.videoId;
                             const embedUrl = "https://www.youtube.com/embed/" + videoId;
 
-                            videoContainer.innerHTML = `</br><iframe width='800' height='400' src="${embedUrl}" frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>`;
+                            videoContainer.innerHTML = `</br><iframe width='600' height='300' src="${embedUrl}" frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>`;
                             Tab.append(videoContainer);
                             page.document.body.append(Tab);
+
+                            page.window.toggle = function () {
+                                if (page.document.body.classList.contains("light")) {
+                                    page.document.body.classList.replace("light", "dark");
+                                    page.document.getElementById("toggle").classList.replace('toggleoff', 'toggleon');
+                                    page.document.getElementById("state").classList.replace('stateoff', 'stateon');
+                                } else {
+                                    page.document.body.classList.replace("dark", "light");
+                                    page.document.getElementById("toggle").classList.replace('toggleon', 'toggleoff');
+                                    page.document.getElementById("state").classList.replace('stateon', 'stateoff');
+                                }
+                            };
                         });
 
 
@@ -120,16 +161,4 @@ let newpage = (p)=>{
     link.type="text/css";
     link.href="styles.css";
     p.document.getElementsByTagName('head')[0].appendChild(link);
-}
-let toggle = ()=>{
-    if (body.classList.contains("light")){
-        body.classList.replace("light","dark");
-        document.getElementById("toggle").classList.replace('toggleoff','toggleon');
-        document.getElementById("state").classList.replace('stateoff','stateon');
-    }else{
-        body.classList.replace("dark","light");
-        document.getElementById("toggle").classList.replace('toggleon','toggleoff');
-        document.getElementById("state").classList.replace('stateon','stateoff');
-    }
-
 }
