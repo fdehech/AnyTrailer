@@ -11,6 +11,7 @@ body {
 }
 
 #main {
+    position: relative;
     background-color: #1e1e1e;
     min-width: 60vw;
     max-width: 65vw;
@@ -37,11 +38,11 @@ body {
 }
 
 
-
 .searchbox {
     position: absolute;
-    width: 15%;
-    height: 5%;
+    top: 4vw;
+    width: 20%;
+    height: 3vw;
     background-color: white;
     border-radius: 1vw;
     border: none;
@@ -49,7 +50,7 @@ body {
     text-align: center;
     font-family: "Poppins", sans-serif;
     font-weight: 800;
-    font-size: 0.7em;
+    font-size: 0.6em;
     transition-duration: 2s;
 }
 
