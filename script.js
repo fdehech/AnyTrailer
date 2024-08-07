@@ -30,23 +30,89 @@ Search_Box.addEventListener("keypress", function(event) {
             .then(R1 => R1.json())
             .then(R1 => {
                 R1.results.forEach(item => {
-                    Container = document.createElement("div");
-                    Container.setAttribute("id","containerlist")
+                    Container = Object.assign(document.createElement("div"),{id:'containerlist'});
 
                     Cover = document.createElement("div");
-                    img = document.createElement("img");
-                    img.setAttribute("src","https://image.tmdb.org/t/p/original/"+item.poster_path)
+                    
+                    const Spinner = document.createElement("span");
+                    const Overlay = document.createElement("div");
+                    Overlay.classList.add("LoadingOverlay");
+                    Spinner.classList.add("Loading");
+                    Cover.append(Spinner);
+                    Cover.append(Overlay);
+                    img = Object.assign(document.createElement("img"),{src:"https://image.tmdb.org/t/p/original/"+item.poster_path});
                     img.classList.add("poster");
+
                     if(body.classList.contains("dark")){
                         img.classList.add("dark");
                     }else{
                         img.classList.add("light");
                     }
-                    
+
+                    img.onload = () => {
+                        Spinner.style.display = 'none';
+                        Overlay.style.display = 'none';
+                    };
 
                     Cover.append(img);
-                    Cover.setAttribute("id",item.id);
-                    Cover.setAttribute("onclick","trailer(this)");
+                    Cover=Object.assign(Cover,{id:item.id})
+                    Cover.onclick = () => {
+                        let page=window.open("");
+                        let link = document.createElement("link");
+                        link.rel="stylesheet";
+                        link.type="text/css";
+                        link.href="styles.css";
+                        page.document.getElementsByTagName('head')[0].appendChild(link);
+
+                        page.document.body.classList.add("dark");
+                        fetch("https://api.themoviedb.org/3/movie/"+item.id+"/external_ids",options)
+                            .then(R2 => R2.json())
+                            .then(R2 => {
+                                let ExternalID = R2.imdb_id;
+                                fetch("https://api.themoviedb.org/3/find/"+ExternalID+"?external_source=imdb_id",options)
+                                    .then(R3 => R3.json())
+                                    .then(R3 => {
+                                        const Title = R3.movie_results[0].original_title
+                                        const Year = R3.movie_results[0].release_date.substring(0,4);
+                                        let Tab=Object.assign(document.createElement("div"),{id:"main"});
+                                        let Onglet = Object.assign(document.createElement("title"),{ textContent :Title} );
+                                        page.document.getElementsByTagName('HEAD')[0].appendChild(Onglet);
+
+                                        let Switch = Object.assign(document.createElement("span"), { id:'state' , onclick:toggle() , class:'stateon'});
+                                        let Toggle = Object.assign(document.createElement("span"), { id:'toggle' , class:"toggleon"});
+                                        let Header = Object.assign(document.createElement("h1"), { textContent: Title+' ('+Year+')', className: "title" });
+                                        Switch.append(Toggle);
+                                        Tab.append(Switch);
+                                        Tab.append(Header);
+                                        
+                                        Youtube_Query = "https://www.googleapis.com/youtube/v3/search?part=snippet&q= "+Title+" "+Year+" Official Trailer "+"&key="+YOUTUBE_API_KEY+"&type=video";
+                                        fetch(Youtube_Query)
+                                            .then(R4=>R4.json())
+                                            .then(R4 => {
+                                                let videoContainer = Object.assign(document.createElement("div"),{id:"videoContainer"});
+                                                const videoId = R4.items[0].id.videoId;
+                                                const embedUrl = "https://www.youtube.com/embed/" + videoId;
+
+                                                videoContainer.innerHTML = `</br><iframe width='600' height='300' src="${embedUrl}" frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>`;
+                                                Tab.append(videoContainer);
+                                                page.document.body.append(Tab);
+
+                                                page.window.toggle = function () {
+                                                    if (page.document.body.classList.contains("light")) {
+                                                        page.document.body.classList.replace("light", "dark");
+                                                        page.document.getElementById("toggle").classList.replace('toggleoff', 'toggleon');
+                                                        page.document.getElementById("state").classList.replace('stateoff', 'stateon');
+                                                    }
+                                                    else {
+                                                        page.document.body.classList.replace("dark", "light");
+                                                        page.document.getElementById("toggle").classList.replace('toggleon', 'toggleoff');
+                                                        page.document.getElementById("state").classList.replace('stateon', 'stateoff');
+                                                    }
+                                                };  
+                                            });
+                                        });
+                            });
+                        }
                     Container.prepend(Cover);
                     main.append(Container);
                 });
@@ -54,85 +120,7 @@ Search_Box.addEventListener("keypress", function(event) {
         }
 })
 
-let trailer=(element) => {
-    
-    let page=window.open("");
-    newpage(page);
-    page.document.body.classList.add("dark");
 
-    let InternalID = element.id;
-    fetch("https://api.themoviedb.org/3/movie/"+InternalID+"/external_ids",options)
-        .then(R2 => R2.json())
-        .then(R2 => {
-            let ExternalID = R2.imdb_id;
-            fetch("https://api.themoviedb.org/3/find/"+ExternalID+"?external_source=imdb_id",options)
-                .then(R3 => R3.json())
-                .then(R3 => {
-                    let Title = R3.movie_results[0].original_title
-                    let Year = R3.movie_results[0].release_date.substring(0,4);
-                    let Tab=document.createElement("div");
-                    let Onglet = Object.assign(document.createElement("title"),{ textContent :Title} );
-                    
-                    Tab.setAttribute("id","main");
-                    let switcher=document.createElement("span");
-                    switcher.setAttribute("id","state");
-                    switcher.setAttribute("onclick","toggle()");
-                    switcher.classList.add("stateon");
-                    let btn = document.createElement("span");
-                    btn.setAttribute("id","toggle");
-                    btn.classList.add("toggleon");
-                    switcher.append(btn);
-                    Tab.append(switcher);
-
-                    let Header = Object.assign(document.createElement("h1"), { textContent: Title+' ('+Year+')', className: "title" });
-
-                    page.document.getElementsByTagName('HEAD')[0].appendChild(Onglet);
-                    Tab.append(Header);
-                    
-                                        
-                    Youtube_Query = "https://www.googleapis.com/youtube/v3/search?part=snippet&q= "+Title+" "+Year+" Official Trailer "+"&key="+YOUTUBE_API_KEY+"&type=video";
-                    fetch(Youtube_Query)
-                        .then(R4=>R4.json())
-                        .then(R4 => {
-
-                            let videoContainer = document.createElement("div");
-                            videoContainer.setAttribute("id", "videoContainer");
-
-                            const videoId = R4.items[0].id.videoId;
-                            const embedUrl = "https://www.youtube.com/embed/" + videoId;
-
-                            videoContainer.innerHTML = `</br><iframe width='600' height='300' src="${embedUrl}" frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>`;
-                            Tab.append(videoContainer);
-                            page.document.body.append(Tab);
-
-                            page.window.toggle = function () {
-                                if (page.document.body.classList.contains("light")) {
-                                    page.document.body.classList.replace("light", "dark");
-                                    page.document.getElementById("toggle").classList.replace('toggleoff', 'toggleon');
-                                    page.document.getElementById("state").classList.replace('stateoff', 'stateon');
-                                } else {
-                                    page.document.body.classList.replace("dark", "light");
-                                    page.document.getElementById("toggle").classList.replace('toggleon', 'toggleoff');
-                                    page.document.getElementById("state").classList.replace('stateon', 'stateoff');
-                                }
-                            };
-                        });
-
-
-                });
-            });
-
-}; 
-
-
-
-let newpage = (p)=>{
-    let link = document.createElement("link");
-    link.rel="stylesheet";
-    link.type="text/css";
-    link.href="styles.css";
-    p.document.getElementsByTagName('head')[0].appendChild(link);
-}
 let toggle = ()=>{
     if (body.classList.contains("light")){
         body.classList.replace("light","dark");
