@@ -74,7 +74,8 @@ Search_Box.addEventListener("keypress", function(event) {
                                     .then(R3 => {
                                         const Title = R3.movie_results[0].original_title
                                         const Year = R3.movie_results[0].release_date.substring(0,4);
-                                        let Tab=Object.assign(document.createElement("div"),{id:"main"});
+                                        let Tab=document.createElement("div");
+                                        Tab.classList.add("Tab");
                                         let Onglet = Object.assign(document.createElement("title"),{ textContent :Title} );
                                         page.document.getElementsByTagName('HEAD')[0].appendChild(Onglet);
 

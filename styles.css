@@ -1,18 +1,20 @@
-body {
+
+html, body {
+    height: 100%;
+    margin: 0;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-}
-
+  }
 .dark{
     background-color: #101010;
 }
+
 .light{
     background-color: whitesmoke;
 }
 
 #main {
     position: relative;
-    background-color: #1e1e1e;
     min-width: 60vw;
     max-width: 65vw;
     margin-left: 16vw;
@@ -28,15 +30,16 @@ body {
     gap: 2vw; 
     transition-duration: 1s;
 }
+
 .center{
     margin-top: 20vw;
     transition-duration: 1s;
 }
+
 .top{
     margin-top: 5vw;
     transition-duration: 1s;
 }
-
 
 .searchbox {
     position: absolute;
@@ -182,3 +185,9 @@ body {
         transform: rotate(360deg);
     }
 }
+.Tab {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
