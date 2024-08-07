@@ -1,21 +1,9 @@
 const body=document.body;
 const main=document.getElementById('main');
 
-let toggle = ()=>{
-    if (body.classList.contains("light")){
-        body.classList.replace("light","dark");
-        document.getElementById("toggle").classList.replace('toggleoff','toggleon');
-        document.getElementById("state").classList.replace('stateoff','stateon');
-    }else{
-        body.classList.replace("dark","light");
-        document.getElementById("toggle").classList.replace('toggleon','toggleoff');
-        document.getElementById("state").classList.replace('stateon','stateoff');
-    }
-}
-
-let clear = () => {
-    document.getElementById("searchbox").value='';
-}
+let Container;
+const API_KEY='&api_key=2f19701f268790d70c5ce6fb6e2201e4';
+const YOUTUBE_API_KEY="AIzaSyD3ebt51vV96BrDF7AwPpHz93dCGfwa2B8";
 
 const options = {
     method: 'GET',
@@ -24,15 +12,6 @@ const options = {
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZjE5NzAxZjI2ODc5MGQ3MGM1Y2U2ZmI2ZTIyMDFlNCIsIm5iZiI6MTcyMDgyNzM1Ny40MzMxNTcsInN1YiI6IjY2OGVjYjQyOTM0NThiM2Q2MTM5YzY0YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.I4r-fqY2d9EeFSw8qq1Iu69DHxEOca1gNqSnzADtA1U'
     }
 };
-
-let replacespace = (str) => {
-    return str.split(' ').join('+');
-}
-
-let Container;
-let API_KEY='&api_key=2f19701f268790d70c5ce6fb6e2201e4';
-let YOUTUBE_API_KEY="AIzaSyD3ebt51vV96BrDF7AwPpHz93dCGfwa2B8";
-
 
 let Search_Box=document.getElementById("searchbox");
 Search_Box.addEventListener("keypress", function(event) {
@@ -95,7 +74,6 @@ let trailer=(element) => {
             fetch("https://api.themoviedb.org/3/find/"+ExternalID+"?external_source=imdb_id",options)
                 .then(R3 => R3.json())
                 .then(R3 => {
-                    console.log(R3)
                     let Title = R3.movie_results[0].original_title
                     let Year = R3.movie_results[0].release_date.substring(0,4);
                     let Tab=document.createElement("div");
@@ -119,7 +97,6 @@ let trailer=(element) => {
                     
                                         
                     Youtube_Query = "https://www.googleapis.com/youtube/v3/search?part=snippet&q= "+Title+" "+Year+" Official Trailer "+"&key="+YOUTUBE_API_KEY+"&type=video";
-                    console.log(Youtube_Query);
                     fetch(Youtube_Query)
                         .then(R4=>R4.json())
                         .then(R4 => {
@@ -161,4 +138,22 @@ let newpage = (p)=>{
     link.type="text/css";
     link.href="styles.css";
     p.document.getElementsByTagName('head')[0].appendChild(link);
+}
+let toggle = ()=>{
+    if (body.classList.contains("light")){
+        body.classList.replace("light","dark");
+        document.getElementById("toggle").classList.replace('toggleoff','toggleon');
+        document.getElementById("state").classList.replace('stateoff','stateon');
+    }else{
+        body.classList.replace("dark","light");
+        document.getElementById("toggle").classList.replace('toggleon','toggleoff');
+        document.getElementById("state").classList.replace('stateon','stateoff');
+    }
+}
+
+let clear = () => {
+    document.getElementById("searchbox").value='';
+}
+let replacespace = (str) => {
+    return str.split(' ').join('+');
 }
