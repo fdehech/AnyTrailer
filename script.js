@@ -58,13 +58,7 @@ let trailer=(element) => {
     
     let page=window.open("");
     newpage(page);
-    if (main.classList.contains("dark")){
-        page.document.body.classList.add("dark");
-
-    }else{
-        page.document.body.classList.add("light");
-    }
-
+    page.document.body.classList.add("dark");
 
     let InternalID = element.id;
     fetch("https://api.themoviedb.org/3/movie/"+InternalID+"/external_ids",options)
@@ -83,10 +77,10 @@ let trailer=(element) => {
                     let switcher=document.createElement("span");
                     switcher.setAttribute("id","state");
                     switcher.setAttribute("onclick","toggle()");
-                    switcher.classList.add("stateoff");
+                    switcher.classList.add("stateon");
                     let btn = document.createElement("span");
                     btn.setAttribute("id","toggle");
-                    btn.classList.add("toggleoff");
+                    btn.classList.add("toggleon");
                     switcher.append(btn);
                     Tab.append(switcher);
 
