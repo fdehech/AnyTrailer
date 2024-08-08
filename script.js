@@ -15,7 +15,7 @@ const options = {
 
 let Search_Box=document.getElementById("searchbox");
 Search_Box.addEventListener("keypress", function(event) {
-    if(event.key){
+    if(event.key =="Enter" ){
         while (body.querySelector("#containerlist")){
             body.querySelector("#containerlist").remove();
         }
