@@ -14,6 +14,7 @@ const options = {
 };
 
 let Search_Box=document.getElementById("searchbox");
+Search_Box.classList.add("light");
 Search_Box.addEventListener("keypress", function(event) {
     if(event.key =="Enter" ){
         while (body.querySelector("#containerlist")){
@@ -125,12 +126,16 @@ Search_Box.addEventListener("keypress", function(event) {
 let toggle = ()=>{
     if (body.classList.contains("light")){
         body.classList.replace("light","dark");
+
         document.getElementById("toggle").classList.replace('toggleoff','toggleon');
         document.getElementById("state").classList.replace('stateoff','stateon');
+        Search_Box.classList.replace('dark','light');
+
     }else{
         body.classList.replace("dark","light");
         document.getElementById("toggle").classList.replace('toggleon','toggleoff');
         document.getElementById("state").classList.replace('stateon','stateoff');
+        Search_Box.classList.replace('light','dark');
     }
 }
 
